@@ -19,7 +19,7 @@ class MailingList(models.Model):
     """Mailing List model"""
     start = models.DateTimeField(verbose_name='StartSending')
     end = models.DateTimeField(verbose_name='EndSending')
-    status = models.CharField(max_length=50, verbose_name='Status', default='Создана')
+    status = models.CharField(max_length=50, verbose_name='Status', default='Created')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='Message')
     recipients = models.ManyToManyField(Recipient, related_name='Recipients')
 
