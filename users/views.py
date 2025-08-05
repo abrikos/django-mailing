@@ -9,7 +9,7 @@ from django.views.generic import CreateView, UpdateView, TemplateView
 import random
 import hashlib
 from config import settings
-from users.forms import CustomUserCreationForm, CustomAuthenticationForm, CabinetForm
+from users.forms import CustomUserCreationForm, CustomAuthenticationForm, CabinetForm, PasswordRestoreForm
 from users.models import User
 
 
@@ -18,6 +18,28 @@ class CustomLoginView(LoginView):
     template_name = 'login.pug'
     form_class = CustomAuthenticationForm
 
+
+class RestorePassword(TemplateView):
+    def get(self, request):
+        form = PasswordRestoreForm
+        return render(request, 'password-restore.pug', {'form':form})
+
+    def post(self, request):
+        email = request.POST.get('email')
+        user = User.objects.get(email=email)
+        if user:
+            rnd = random.randint(0, 1000000)
+            user.set_password(rnd)
+            user.save()
+            subject = 'New password'
+            message = rnd
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [user.email]
+            send_mail(subject, message, from_email, recipient_list)
+
+        return redirect('login')
+
+
 class ConfirmEmail(TemplateView):
     def get(self, request):
         code = request.GET.get('code')
@@ -25,7 +47,7 @@ class ConfirmEmail(TemplateView):
         if user:
             user.is_active = True
             user.save()
-        return render(request,'confirm.pug')
+        return render(request, 'confirm.pug')
 
 
 class RegisterView(CreateView):
@@ -48,7 +70,7 @@ class RegisterView(CreateView):
         message = f'http://{self.request.headers['Host']}/user/confirm?code={code}'
         from_email = settings.DEFAULT_FROM_EMAIL
         recipient_list = [user_email]
-        # send_mail(subject, message, from_email, recipient_list)
+        send_mail(subject, message, from_email, recipient_list)
 
 
 class CabinetView(TemplateView):

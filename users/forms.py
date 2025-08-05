@@ -45,3 +45,6 @@ class CabinetForm(PasswordChangeForm):
         self.fields['new_password1'].widget.attrs.update({'class':'form-control', 'placeholder':'Text of post'})
         self.fields['new_password2'].widget.attrs.update({'class':'form-control', 'placeholder':'Text of post'})
 
+
+class PasswordRestoreForm(forms.Form):
+    email = forms.CharField(max_length=100, label='Your email')
