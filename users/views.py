@@ -29,10 +29,10 @@ class RestorePassword(TemplateView):
         user = User.objects.get(email=email)
         if user:
             rnd = random.randint(0, 1000000)
-            user.set_password(rnd)
+            user.set_password(f'{rnd}')
             user.save()
             subject = 'New password'
-            message = rnd
+            message = f'{rnd}'
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = [user.email]
             send_mail(subject, message, from_email, recipient_list)

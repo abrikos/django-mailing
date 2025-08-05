@@ -5,5 +5,7 @@ h2 Login
 form(method="post")
     {% csrf_token %}
     {{ form.as_p }}
-    button(type="submit") Login
+    button(type="submit") Send
+    div
+        a(href="{%url 'password-restore'%}") Restore password
 {%endblock%}

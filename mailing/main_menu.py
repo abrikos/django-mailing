@@ -9,5 +9,4 @@ def main_menu_f(request):
     else:
         menu.append({'route': 'login', 'title': 'Login'})
         menu.append({'route': 'register', 'title': 'Register'})
-        menu.append({'route': 'password-restore', 'title': 'Restore password'})
     return {"main_menu": menu}
