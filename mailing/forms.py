@@ -21,6 +21,8 @@ class SendingForm(ModelForm):
         self.fields['start'].widget.attrs.update({'class': 'form-control'})
         self.fields['end'].widget.attrs.update({'class': 'form-control'})
         self.fields['status'].widget.attrs.update({'class': 'form-control'})
+        self.fields['message'].widget.attrs.update({'class': 'form-control'})
+        self.fields['recipients'].widget.attrs.update({'class': 'form-control'})
 
 
 class MessageForm(ModelForm):

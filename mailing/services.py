@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from django.utils import timezone
+
 from django.core.mail import send_mail
 
 from config import settings
@@ -34,6 +38,7 @@ class SendingService:
 
     @staticmethod
     def run_all():
-        sendings = Sending.objects.filter(status='Running')
+        sendings = Sending.objects.filter(status='Running', start__lt=datetime.now(), end__gt=datetime.now())
         for sending in sendings:
-            SendingService.run_service(sending.id, sending.owner)
+            status = SendingService.run_service(sending.id, sending.owner)
+            print(status)
