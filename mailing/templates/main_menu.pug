@@ -1,0 +1,14 @@
+div.d-flex.flex-column.flex-md-row.align-items-center.p-3.px-md-4.mb-3.bg-white.border-bottom.box-shadow
+    h5.my-0.mr-md-auto.font-weight-normal Mailing lists
+    nav.ms-5
+        {%for link in main_menu%}
+        a.p-2.btn.btn-outline-primary(class="{% if request.resolver_match.url_name == link.route %}active{%endif%}" href="{%url link.route%}") {{link.title}}
+        {%endfor%}
+    {%if user.id%}
+    form(action="{%url 'logout'%}" method="post")
+        {% csrf_token %}
+        button.p-2.btn.btn-outline-primary(type="submit") Log out
+    {%if user.is_superuser%}
+    a(href="/admin") Admin
+    {%endif%}
+    {%endif%}
