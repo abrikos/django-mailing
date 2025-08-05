@@ -1,10 +1,26 @@
 {% extends 'cabinet.pug'%}
 {%block title%} Sending {%endblock%}
 {%block cabinet%}
-h3  {%if request.resolver_match.url_name == 'sending-update' %} Update {%else%}Create {%endif%} sending
+h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {%endif%} sending
+    button(onclick="runSending({{ request.resolver_match.kwargs.pk }}, '{{ csrf_token }}')") RUN
 form(method="post")
     {% csrf_token %}
     {{ form.as_p }}
-    button(type="submit") Send
-
+    button(type="submit") {%if 'update' in request.resolver_match.url_name %} Update {%else%} Create {%endif%}
+{%if 'update' in request.resolver_match.url_name %}
+hr
+h3 Results
+table.table.table-striped.table-bordered.table-hover
+    tr
+        th Date
+        th Status
+        th Response
+    tbody#results-table
+        {%for result in results%}
+        tr
+            td {{result.date}}
+            td {{result.status}}
+            td {{result.response}}
+        {%endfor%}
+{%endif%}
 {%endblock%}

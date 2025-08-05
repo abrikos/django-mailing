@@ -1,7 +1,7 @@
 {% extends 'cabinet.pug'%}
 {%block title%} Message {%endblock%}
 {%block cabinet%}
-h3  {%if request.resolver_match.url_name == 'message-update' %} Update {%else%}Create {%endif%} message
+h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {%endif%} message
 form(method="post")
     {% csrf_token %}
     {{ form.as_p }}

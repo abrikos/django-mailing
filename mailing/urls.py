@@ -13,4 +13,8 @@ urlpatterns = [
     path(r'recipient', views.RecipientListView.as_view(), name="recipient"),
     path(r'recipient-create', views.RecipientCreateView.as_view(), name="recipient-create"),
     path(r'recipient-update/<int:pk>', views.RecipientUpdateView.as_view(), name="recipient-update"),
+
+    path('run', views.run_sending, name="run"),
+    path('results/<int:pk>', views.get_results, name="results"),
 ]
+

@@ -7,6 +7,6 @@ h3 Sendings
 div
     {%for item in list%}
     div
-        a(href="{%url 'sending-update' item.id%}") {{item.subject}}
+        a(href="{%url 'sending-update' item.id%}") {{item}}
     {%endfor%}
 {%endblock%}

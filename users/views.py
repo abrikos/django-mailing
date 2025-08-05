@@ -35,7 +35,10 @@ class RestorePassword(TemplateView):
             message = f'{rnd}'
             from_email = settings.DEFAULT_FROM_EMAIL
             recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list)
+            try:
+                send_mail(subject, message, from_email, recipient_list)
+            except Exception as e:
+                print('Error:', e)
 
         return redirect('login')
 
@@ -70,7 +73,10 @@ class RegisterView(CreateView):
         message = f'http://{self.request.headers['Host']}/user/confirm?code={code}'
         from_email = settings.DEFAULT_FROM_EMAIL
         recipient_list = [user_email]
-        send_mail(subject, message, from_email, recipient_list)
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+        except Exception as e:
+            print('Error:',e)
 
 
 class CabinetView(TemplateView):

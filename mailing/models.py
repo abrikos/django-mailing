@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from users.models import User
 
@@ -29,10 +30,13 @@ class Sending(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='Message')
     recipients = models.ManyToManyField(Recipient, related_name='Recipients')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='SendingOwner')
+    def __str__(self):
+        return f'{self.message.subject} {self.start} - {self.end} :: {self.status}'
+
 
 class Result(models.Model):
     """Result model """
-    date = models.DateTimeField(verbose_name='Sending date')
+    date = models.DateTimeField(verbose_name='Sending date', auto_now_add=True)
     status = models.CharField(max_length=50, verbose_name='Status')
     response = models.TextField(max_length=50, verbose_name='ServerResponse')
     sending = models.ForeignKey(Sending, on_delete=models.CASCADE, related_name='Sending')
