@@ -9,23 +9,30 @@ class Recipient(models.Model):
     email = models.CharField(max_length=250, verbose_name='Email', unique=True)
     fio = models.CharField(max_length=250, verbose_name='Fio')
     comment = models.TextField(verbose_name='Comment')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='RecipientOwner')
+    def __str__(self):
+        return self.email
 
 class Message(models.Model):
     """Message model"""
     subject = models.CharField(max_length=250, verbose_name='Subject')
     body = models.TextField(verbose_name='Body')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='MessageOwner')
+    def __str__(self):
+        return self.subject
 
-class MailingList(models.Model):
+class Sending(models.Model):
     """Mailing List model"""
     start = models.DateTimeField(verbose_name='StartSending')
     end = models.DateTimeField(verbose_name='EndSending')
-    status = models.CharField(max_length=50, verbose_name='Status', default='Created')
+    status = models.CharField(max_length=50, verbose_name='Status', default='created', choices=[('created','Created'), ('ended','Ended'), ('running','Running')])
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='Message')
     recipients = models.ManyToManyField(Recipient, related_name='Recipients')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='SendingOwner')
 
-class Sending(models.Model):
-    """Try to send model """
+class Result(models.Model):
+    """Result model """
     date = models.DateTimeField(verbose_name='Sending date')
     status = models.CharField(max_length=50, verbose_name='Status')
     response = models.TextField(max_length=50, verbose_name='ServerResponse')
-    mailing_list = models.ForeignKey(MailingList, on_delete=models.CASCADE, related_name='MailingList')
+    sending = models.ForeignKey(Sending, on_delete=models.CASCADE, related_name='Sending')

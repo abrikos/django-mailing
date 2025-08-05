@@ -1,0 +1,12 @@
+{% extends 'cabinet.pug'%}
+{%block title%} Recipients {%endblock%}
+{%block cabinet%}
+h3 Recipients
+    a.bi.bi-plus-circle-fill(title="Add recipient" href="{%url 'recipient-create'%}")
+
+div
+    {%for item in list%}
+    div
+        a(href="{%url 'recipient-update' item.id%}") {{item.fio}}
+    {%endfor%}
+{%endblock%}

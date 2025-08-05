@@ -1,9 +1,0 @@
-{% extends 'base.pug'%}
-{%block title%} Cabinet {%endblock%}
-{%block content%}
-h2 Cabinet
-form(method="post")
-    {% csrf_token %}
-    {{ form.as_p }}
-    button(type="submit") Update
-{%endblock%}

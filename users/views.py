@@ -9,7 +9,7 @@ from django.views.generic import CreateView, UpdateView, TemplateView
 import random
 import hashlib
 from config import settings
-from users.forms import CustomUserCreationForm, CustomAuthenticationForm, CabinetForm, PasswordRestoreForm
+from users.forms import CustomUserCreationForm, CustomAuthenticationForm, UserPassChangeForm, PasswordRestoreForm
 from users.models import User
 
 
@@ -74,12 +74,16 @@ class RegisterView(CreateView):
 
 
 class CabinetView(TemplateView):
+    def get(self, request):
+        return render(request, 'cabinet.pug' )
+
+class PasswordChangeView(TemplateView):
     def get(self, request, *args, **kwargs):
-        form = CabinetForm(request.user)
-        return render(request, 'cabinet.pug', {'form': form})
+        form = UserPassChangeForm(request.user)
+        return render(request, 'password-change.pug', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = CabinetForm(request.user, request.POST)
+        form = UserPassChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
@@ -87,4 +91,4 @@ class CabinetView(TemplateView):
             return redirect('cabinet')
         else:
             messages.error(request, 'Please correct the error below.')
-            return render(request, 'cabinet.pug', {'form': form})
+            return render(request, 'password-change.pug', {'form': form})

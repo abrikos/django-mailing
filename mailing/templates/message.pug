@@ -1,0 +1,12 @@
+{% extends 'cabinet.pug'%}
+{%block title%} Messages {%endblock%}
+{%block cabinet%}
+h3 Messages
+    a.bi.bi-plus-circle-fill(title="Add messages" href="{%url 'message-create'%}")
+
+div
+    {%for item in list%}
+    div
+        a(href="{%url 'message-update' item.id%}") {{item.subject}}
+    {%endfor%}
+{%endblock%}

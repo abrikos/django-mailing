@@ -1,0 +1,10 @@
+{% extends 'cabinet.pug'%}
+{%block title%} Sending {%endblock%}
+{%block cabinet%}
+h3  {%if request.resolver_match.url_name == 'sending-update' %} Update {%else%}Create {%endif%} sending
+form(method="post")
+    {% csrf_token %}
+    {{ form.as_p }}
+    button(type="submit") Send
+
+{%endblock%}

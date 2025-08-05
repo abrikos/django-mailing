@@ -32,14 +32,14 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields['username'].widget.attrs.update({'class':'form-control', 'placeholder':'Email'})
         self.fields['password'].widget.attrs.update({'class':'form-control', 'placeholder':'Password'})
 
-class CabinetForm(PasswordChangeForm):
+class UserPassChangeForm(PasswordChangeForm):
     """Cabinet post form"""
     class Meta:
         model = User
         #fields = ['phone', 'password']
 
     def __init__(self, *args, **kwargs):
-        super(CabinetForm, self).__init__(*args, **kwargs)
+        super(UserPassChangeForm, self).__init__(*args, **kwargs)
         #self.fields['phone'].widget.attrs.update({'class':'form-control', 'placeholder':'Header of post'})
         self.fields['old_password'].widget.attrs.update({'class':'form-control', 'placeholder':'Old pass'})
         self.fields['new_password1'].widget.attrs.update({'class':'form-control', 'placeholder':'Text of post'})

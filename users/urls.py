@@ -10,6 +10,7 @@ urlpatterns = [
     path('cabinet/', views.CabinetView.as_view(), name="cabinet"),
     path('confirm/', views.ConfirmEmail.as_view(), name="confirm"),
     path('password-restore/', views.RestorePassword.as_view(), name="password-restore"),
+    path('password-change/', views.PasswordChangeView.as_view(), name="password-change"),
 
 
 ]
