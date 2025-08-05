@@ -37,6 +37,7 @@ class Sending(models.Model):
 class Result(models.Model):
     """Result model """
     date = models.DateTimeField(verbose_name='Sending date', auto_now_add=True)
-    status = models.CharField(max_length=50, verbose_name='Status')
-    response = models.TextField(max_length=50, verbose_name='ServerResponse')
+    status = models.CharField(max_length=50, verbose_name='Status', blank=True, null=True)
+    email = models.CharField(max_length=50, verbose_name='Email', blank=True, null=True)
+    response = models.TextField(max_length=50, verbose_name='ServerResponse', blank=True, null=True)
     sending = models.ForeignKey(Sending, on_delete=models.CASCADE, related_name='Sending')

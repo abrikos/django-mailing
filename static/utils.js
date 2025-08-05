@@ -24,6 +24,7 @@ console.log(rows)
     $.each(rows, function(index, item){
         row = '<tr>'
         row += '<td>' + item.fields.date + '</td>'
+        row += '<td>' + item.fields.email + '</td>'
         row += '<td>' + item.fields.status + '</td>'
         row += '<td>' + item.fields.response + '</td>'
         row += '</tr>'

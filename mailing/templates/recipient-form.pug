@@ -1,5 +1,4 @@
 {% extends 'cabinet.pug'%}
-{%block title%} Recipient {%endblock%}
 {%block cabinet%}
 h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {%endif%} recipient
 form(method="post")

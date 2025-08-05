@@ -1,12 +1,20 @@
 {% extends 'cabinet.pug'%}
-{%block title%} Sendings {%endblock%}
 {%block cabinet%}
 h3 Sendings
     a.bi.bi-plus-circle-fill(title="Add sending" href="{%url 'sending-create'%}")
 
-div
+table.table.table-striped.table-bordered.table-hover
+    tr
+        th Message subject
+        th Start
+        th End
+        th Status
     {%for item in list%}
-    div
-        a(href="{%url 'sending-update' item.id%}") {{item}}
+    tr
+        td
+            a(href="{%url 'sending-update' item.id%}") {{item.message.subject}}
+        td {{item.start}}
+        td {{item.end}}
+        td {{item.status}}
     {%endfor%}
 {%endblock%}

@@ -1,17 +1,19 @@
 {% extends 'base.pug'%}
 {%block title%} Cabinet {%endblock%}
 {%block content%}
+h2.border-bottom Cabinet
 div.d-flex.align-items-start
-    div.border-end.px-3
-        h2 Cabinet
-        a(href="{%url 'password-change'%}") Change password
-        br
-        a(href="{%url 'sending'%}") Sendings
-        br
-        a(href="{%url 'message'%}") Messages
-        br
-        a(href="{%url 'recipient'%}") Recipients
-        br
     div.px-3
+        ul
+            li
+                a(href="{%url 'sending'%}") Sendings
+            li
+                a(href="{%url 'message'%}") Messages
+            li
+                a(href="{%url 'recipient'%}") Recipients
+            li
+                a(href="{%url 'password-change'%}") Change password
+
+    div.px-3.border-start.px-3
         {%block cabinet%}{%endblock%}
 {%endblock%}

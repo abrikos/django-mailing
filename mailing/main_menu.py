@@ -5,7 +5,7 @@ def main_menu_f(request):
 
     ]
     if request.user.id:
-        menu.append({'route': 'cabinet', 'title': request.user.email})
+        menu.append({'route': 'sending', 'title': request.user.email})
     else:
         menu.append({'route': 'login', 'title': 'Login'})
         menu.append({'route': 'register', 'title': 'Register'})

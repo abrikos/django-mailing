@@ -124,11 +124,6 @@ class SendingUpdateView(LoginRequiredMixin, UpdateView):
         kwargs['user'] = self.request.user  # Pass the current user
         return kwargs
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['results'] = Result.objects.filter(sending=1).order_by('-date')
-        return context
-
 
 def run_sending(request):
     status = 'error'
