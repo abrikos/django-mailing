@@ -7,9 +7,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView
 from rest_framework import viewsets, permissions
 
-from mailing.forms import SendingForm, MessageForm, RecipientForm
-from mailing.models import Sending, Message, Recipient, Result
-from mailing.services import SendingService
+from mailing.forms import MailingForm, MessageForm, RecipientForm
+from mailing.models import Mailing, Message, Recipient, Result
+from mailing.services import MailingService
 from users.models import User
 
 
@@ -19,8 +19,8 @@ class HomeView(TemplateView):
 
     def get(self, request):
         context = {
-            'lists': Sending.objects.count(),
-            'active_lists': Sending.objects.filter(status='Running').count(),
+            'lists': Mailing.objects.count(),
+            'active_lists': Mailing.objects.filter(status='Running').count(),
             'recipients': User.objects.filter(is_active=True).count()
         }
         return render(request, 'home.pug', context)
@@ -86,21 +86,21 @@ class RecipientUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('recipient')
 
 
-class SendingListView(LoginRequiredMixin, ListView):
-    """Sending list view"""
-    model = Sending
-    template_name = 'sending.pug'
+class MailingListView(LoginRequiredMixin, ListView):
+    """Mailing list view"""
+    model = Mailing
+    template_name = 'mailing.pug'
     context_object_name = 'list'
 
     def get_queryset(self):
-        return Sending.objects.filter(owner=self.request.user)
+        return Mailing.objects.filter(owner=self.request.user)
 
 
-class SendingCreateView(LoginRequiredMixin, CreateView):
-    """Sending create view"""
-    form_class = SendingForm
-    template_name = 'sending-form.pug'
-    success_url = reverse_lazy('sending')
+class MailingCreateView(LoginRequiredMixin, CreateView):
+    """Mailing create view"""
+    form_class = MailingForm
+    template_name = 'mailing-form.pug'
+    success_url = reverse_lazy('mailing')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -112,12 +112,12 @@ class SendingCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class SendingUpdateView(LoginRequiredMixin, UpdateView):
-    """Sending update view"""
-    model = Sending
-    form_class = SendingForm
-    template_name = 'sending-form.pug'
-    success_url = reverse_lazy('sending')
+class MailingUpdateView(LoginRequiredMixin, UpdateView):
+    """Mailing update view"""
+    model = Mailing
+    form_class = MailingForm
+    template_name = 'mailing-form.pug'
+    success_url = reverse_lazy('mailing')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -125,20 +125,21 @@ class SendingUpdateView(LoginRequiredMixin, UpdateView):
         return kwargs
 
 
-def run_sending(request):
+def run_mailing(request):
     status = 'error'
     if request.POST:
-        sending_id = request.POST.get('sending')
+        mailing_id = request.POST.get('mailing')
+        print('ffffff', mailing_id)
         user = request.user
-        status = SendingService.run_service(sending_id, user)
+        status = MailingService.run_service(mailing_id, user)
     return JsonResponse({'status':status})
 
 def get_results(request, pk):
     data = []
     if request.GET:
         user = request.user
-        sending = Sending.objects.get(pk=pk, owner=user)
-        if sending:
-            queryset = Result.objects.filter(sending=pk).order_by('-date')
+        mailing = Mailing.objects.get(pk=pk, owner=user)
+        if mailing:
+            queryset = Result.objects.filter(mailing=pk).order_by('-date')
             data = serializers.serialize('json', queryset)
     return HttpResponse(data, content_type="application/json")

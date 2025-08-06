@@ -4,6 +4,6 @@ h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {
 form(method="post")
     {% csrf_token %}
     {{ form.as_p }}
-    button(type="submit") Send
+    button(type="submit") {%if 'update' in request.resolver_match.url_name %} Update {%else%} Create {%endif%}
 
 {%endblock%}

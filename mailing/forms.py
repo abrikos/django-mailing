@@ -2,18 +2,18 @@ from django import forms
 from django.contrib.admin import widgets
 from django.forms import ModelForm
 
-from mailing.models import Sending, Message, Recipient
+from mailing.models import Mailing, Message, Recipient
 from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 
 
-class SendingForm(ModelForm):
+class MailingForm(ModelForm):
     class Meta:
-        model = Sending
+        model = Mailing
         fields = ['start', 'end', 'status', 'message', 'recipients']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(SendingForm, self).__init__(*args, **kwargs)
+        super(MailingForm, self).__init__(*args, **kwargs)
         self.fields['message'].queryset = Message.objects.filter(owner=user)
         self.fields['recipients'].queryset = Recipient.objects.filter(owner=user)
         self.fields['start'].widget = DateTimePickerInput()

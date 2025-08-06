@@ -1,16 +1,16 @@
 let results =[]
-function runSending(sending, csrfmiddlewaretoken){
+function runMailing(mailing, csrfmiddlewaretoken){
 $.ajaxSetup({data:{csrfmiddlewaretoken}})
-$.post('/mailing/run',{sending}, function(response, status){
+$.post('/mailing/run',{mailing}, function(response, status){
 if(status==='success'){
-    getResults(sending, csrfmiddlewaretoken)
+    getResults(mailing, csrfmiddlewaretoken)
 }
 },'json')
 }
 
-function getResults(sending, csrfmiddlewaretoken){
+function getResults(mailing, csrfmiddlewaretoken){
     $.ajaxSetup({data:{csrfmiddlewaretoken}})
-    $.get('/mailing/results/'+sending, function(response,status){
+    $.get('/mailing/results/'+mailing, function(response,status){
         if(status==='success'){
             drawTable(response)
         }

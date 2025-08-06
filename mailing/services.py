@@ -5,10 +5,10 @@ from django.utils import timezone
 from django.core.mail import send_mail
 
 from config import settings
-from mailing.models import Sending, Result
+from mailing.models import Mailing, Result
 
 
-class SendingService:
+class MailingService:
     @staticmethod
     def send(subject, message, email):
         from_email = settings.DEFAULT_FROM_EMAIL
@@ -23,22 +23,23 @@ class SendingService:
 
     @staticmethod
     def run_service(pk, user):
-        sending = Sending.objects.get(pk=pk, owner=user)
+        mailing = Mailing.objects.get(pk=pk, owner=user)
+        print('zzzzzzz',mailing)
         status = ''
         response = ''
-        if sending:
-            subject = sending.message.subject
-            message = sending.message.body
-            for recipient in sending.recipients.all():
-                status, response = SendingService.send(subject, message, recipient.email)
-                Result.objects.create(status=status, response=response, sending=sending, email=recipient.email)
+        if mailing:
+            subject = mailing.message.subject
+            message = mailing.message.body
+            for recipient in mailing.recipients.all():
+                status, response = MailingService.send(subject, message, recipient.email)
+                Result.objects.create(status=status, response=response, mailing=mailing, email=recipient.email)
         else:
             status = 'error'
         return status
 
     @staticmethod
     def run_all():
-        sendings = Sending.objects.filter(status='Running', start__lt=datetime.now(), end__gt=datetime.now())
-        for sending in sendings:
-            status = SendingService.run_service(sending.id, sending.owner)
+        mailings = Mailing.objects.filter(status='Running', start__lt=datetime.now(), end__gt=datetime.now())
+        for mailing in mailings:
+            status = MailingService.run_service(mailing.id, mailing.owner)
             print(status)

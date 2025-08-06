@@ -1,8 +1,8 @@
 {% extends 'cabinet.pug'%}
 {%block cabinet%}
 
-h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {%endif%} sending
-    button(onclick="runSending({{ request.resolver_match.kwargs.pk }}, '{{ csrf_token }}')") RUN
+h3  {% if 'update' in request.resolver_match.url_name %} Update {%else%}Create {%endif%} mailing
+    button(onclick="runMailing({{ request.resolver_match.kwargs.pk }}, '{{ csrf_token }}')") RUN
 form(method="post")
     {% csrf_token %}
     {{ form.as_p }}

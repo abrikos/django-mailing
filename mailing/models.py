@@ -21,22 +21,22 @@ class Message(models.Model):
     def __str__(self):
         return self.subject
 
-class Sending(models.Model):
+class Mailing(models.Model):
     """Mailing List model"""
-    start = models.DateTimeField(verbose_name='StartSending')
-    end = models.DateTimeField(verbose_name='EndSending')
+    start = models.DateTimeField(verbose_name='StartMailing')
+    end = models.DateTimeField(verbose_name='EndMailing')
     status = models.CharField(max_length=50, verbose_name='Status', default='created', choices=[('created','Created'), ('ended','Ended'), ('running','Running')])
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='Message')
     recipients = models.ManyToManyField(Recipient, related_name='Recipients')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='SendingOwner')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='MailingOwner')
     def __str__(self):
         return f'{self.message.subject} {self.start} - {self.end} :: {self.status}'
 
 
 class Result(models.Model):
     """Result model """
-    date = models.DateTimeField(verbose_name='Sending date', auto_now_add=True)
+    date = models.DateTimeField(verbose_name='Mailing date', auto_now_add=True)
     status = models.CharField(max_length=50, verbose_name='Status', blank=True, null=True)
     email = models.CharField(max_length=50, verbose_name='Email', blank=True, null=True)
     response = models.TextField(max_length=50, verbose_name='ServerResponse', blank=True, null=True)
-    sending = models.ForeignKey(Sending, on_delete=models.CASCADE, related_name='Sending')
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, related_name='Mailing')
