@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "mailing",
     "users",
     "bootstrap_datepicker_plus",
+    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
@@ -165,3 +166,5 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379/1",
     }
 }
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
