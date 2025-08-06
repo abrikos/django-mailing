@@ -9,8 +9,10 @@ from mailing.forms import MailingForm, MessageForm, RecipientForm
 from mailing.models import Mailing, Message, Recipient, Result
 from mailing.services import MailingService
 from users.models import User
+import logging
 
-
+logger = logging.getLogger(__name__)
+logging.basicConfig(filename='myapp.log', level=logging.INFO)
 # Create your views here.
 class HomeView(TemplateView):
     """Home view"""
@@ -45,6 +47,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        logger.info(f"Message created: user: {self.request.user}, subj: {form.cleaned_data.get('subject')}")
         return super().form_valid(form)
 
 
@@ -78,6 +81,7 @@ class RecipientCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        logger.info(f"Recipient created: user: {self.request.user}, email: {form.cleaned_data.get('email')}")
         return super().form_valid(form)
 
 
@@ -115,6 +119,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        logger.info(f"Mailing created: user: {self.request.user}, start: {form.cleaned_data.get('start')}, end: {form.cleaned_data.get('end')}")
         return super().form_valid(form)
 
 
