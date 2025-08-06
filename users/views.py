@@ -10,12 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
 from config import settings
-from users.forms import (
-    CustomAuthenticationForm,
-    CustomUserCreationForm,
-    PasswordRestoreForm,
-    UserPassChangeForm,
-)
+from users.forms import CustomAuthenticationForm, CustomUserCreationForm, PasswordRestoreForm, UserPassChangeForm
 from users.models import User
 
 

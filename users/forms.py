@@ -1,9 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordChangeForm,
-    UserCreationForm,
-)
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 
 from users.models import User
 
@@ -21,16 +17,10 @@ class CustomUserCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
-        self.fields["email"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Email"}
-        )
+        self.fields["email"].widget.attrs.update({"class": "form-control", "placeholder": "Email"})
         # self.fields['password'].widget.attrs.update({'class':'form-control', 'placeholder':'Password'})
-        self.fields["password1"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Password"}
-        )
-        self.fields["password2"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Password confirm"}
-        )
+        self.fields["password1"].widget.attrs.update({"class": "form-control", "placeholder": "Password"})
+        self.fields["password2"].widget.attrs.update({"class": "form-control", "placeholder": "Password confirm"})
         # self.fields['phone'].widget.attrs.update({'class':'form-control', 'placeholder':'Phone'})
 
     #     self.fields['text'].widget.attrs.update({'class':'form-control', 'placeholder':'Text of post'})
@@ -43,12 +33,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomAuthenticationForm, self).__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Email"}
-        )
-        self.fields["password"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Password"}
-        )
+        self.fields["username"].widget.attrs.update({"class": "form-control", "placeholder": "Email"})
+        self.fields["password"].widget.attrs.update({"class": "form-control", "placeholder": "Password"})
 
 
 class UserPassChangeForm(PasswordChangeForm):
@@ -61,15 +47,9 @@ class UserPassChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super(UserPassChangeForm, self).__init__(*args, **kwargs)
         # self.fields['phone'].widget.attrs.update({'class':'form-control', 'placeholder':'Header of post'})
-        self.fields["old_password"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Old pass"}
-        )
-        self.fields["new_password1"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Text of post"}
-        )
-        self.fields["new_password2"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Text of post"}
-        )
+        self.fields["old_password"].widget.attrs.update({"class": "form-control", "placeholder": "Old pass"})
+        self.fields["new_password1"].widget.attrs.update({"class": "form-control", "placeholder": "Text of post"})
+        self.fields["new_password2"].widget.attrs.update({"class": "form-control", "placeholder": "Text of post"})
 
 
 class PasswordRestoreForm(forms.Form):

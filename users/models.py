@@ -6,7 +6,7 @@ from django.db import models
 class Manager(UserManager):
     """User manager"""
 
-    def create_user(self, email, password=None):
+    def create_user(self, username, email=None, password=None, **extra_fields):
         if not email:
             raise ValueError("Пользователь должен иметь email")
         user = self.model(
@@ -15,7 +15,7 @@ class Manager(UserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
         user = self.model(
             email=email,
         )

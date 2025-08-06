@@ -29,9 +29,7 @@ class MailingService:
             subject = mailing.message.subject
             message = mailing.message.body
             for recipient in mailing.recipients.all():
-                status, response = MailingService.send(
-                    subject, message, recipient.email
-                )
+                status, response = MailingService.send(subject, message, recipient.email)
                 Result.objects.create(
                     status=status,
                     response=response,
@@ -44,9 +42,7 @@ class MailingService:
 
     @staticmethod
     def run_all():
-        mailings = Mailing.objects.filter(
-            status="Running", start__lt=datetime.now(), end__gt=datetime.now()
-        )
+        mailings = Mailing.objects.filter(status="Running", start__lt=datetime.now(), end__gt=datetime.now())
         for mailing in mailings:
             status = MailingService.run_service(mailing.id, mailing.owner)
             print(status)
