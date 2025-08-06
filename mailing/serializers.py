@@ -1,13 +1,14 @@
 from rest_framework import serializers
 
-from .models import Recipient, Result, Message, Mailing
+from .models import Mailing, Message, Result
 
 
 class MailingSerializer(serializers.ModelSerializer):
     """ML serializer"""
+
     class Meta:
         model = Mailing
-        fields = ['__all__']
+        fields = ["__all__"]
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -15,7 +16,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ['__all__']
+        fields = ["__all__"]
 
 
 class ResultSerializer(serializers.ModelSerializer):
@@ -23,4 +24,4 @@ class ResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Result
-        fields = ['__all__']
+        fields = ["__all__"]
