@@ -15,6 +15,14 @@ function blockUser(user, csrfmiddlewaretoken){
         }
     })
 }
+function disableMailing(id, csrfmiddlewaretoken){
+    $.ajaxSetup({data:{csrfmiddlewaretoken}})
+    $.post('/mailing/disable-mailing/'+id, function(response,status){
+    if(status==='success'){
+        window.location.reload();
+        }
+    })
+}
 
 function getResults(mailing, csrfmiddlewaretoken){
     $.ajaxSetup({data:{csrfmiddlewaretoken}})

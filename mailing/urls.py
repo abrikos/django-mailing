@@ -32,4 +32,6 @@ urlpatterns = [
     path("results/<int:pk>", views.get_results, name="results"),
     path("users/", views.UsersListView.as_view(), name="users"),
     path("block-user/<int:pk>", views.block_user, name="block-user"),
+    path("mailings-all/", views.MailingsAllListView.as_view(), name="mailings-all"),
+    path("disable-mailing/<int:pk>", views.disable_mailing, name="disable-mailing"),
 ]

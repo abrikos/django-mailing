@@ -51,6 +51,32 @@ def block_user(request, pk):
             user.save()
     return HttpResponse()
 
+class MailingsAllListView(LoginRequiredMixin, ListView):
+    """User list view"""
+
+    model = Mailing
+    template_name = "mailings-all.pug"
+    context_object_name = "list"
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='Moderator').exists():
+            return Mailing.objects.all()
+        else:
+            return []
+
+def disable_mailing(request, pk):
+    if request.POST:
+        if not request.user.groups.filter(name='Moderator').exists():
+            return HttpResponseForbidden("You don't have permissions")
+        mailing = Mailing.objects.get(pk=pk)
+        if mailing:
+            if mailing.status == 'ended':
+                mailing.status = 'created'
+            else:
+                mailing.status = 'ended'
+            mailing.save()
+    return HttpResponse()
+
 
 class MessageListView(LoginRequiredMixin, ListView):
     """Message list view"""
