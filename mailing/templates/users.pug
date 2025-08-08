@@ -1,0 +1,10 @@
+{% extends 'base.pug'%}
+{%block title%} User list {%endblock%}
+{%block content%}
+h2.border-bottom User list
+{%for user in list%}
+div {{user}}
+    button.p-2.btn.btn-outline-primary(onclick="blockUser({{ user.id }}, '{{ csrf_token }}')") {% if user.is_active %} Block {%else%} Unblock {%endif%}
+
+{%endfor%}
+{%endblock%}

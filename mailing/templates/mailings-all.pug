@@ -1,0 +1,10 @@
+{% extends 'base.pug'%}
+{%block title%} Mailings list {%endblock%}
+{%block content%}
+h2.border-bottom Mailings list
+{%for mailing in list%}
+div {{mailing}}
+    button.p-2.btn.btn-outline-primary(onclick="disableMailing({{ mailing.id }}, '{{ csrf_token }}')")
+        span {% if 'ended' in mailing.status %} Start {%else%} End {%endif%}
+{%endfor%}
+{%endblock%}
