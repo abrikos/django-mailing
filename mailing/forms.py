@@ -7,7 +7,7 @@ from mailing.models import Mailing, Message, Recipient
 class MailingForm(ModelForm):
     class Meta:
         model = Mailing
-        fields = ["start", "end", "status", "message", "recipients"]
+        fields = ["start", "end", "enabled", "message", "recipients"]
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
@@ -18,7 +18,6 @@ class MailingForm(ModelForm):
         self.fields["end"].widget = DateTimePickerInput()
         self.fields["start"].widget.attrs.update({"class": "form-control"})
         self.fields["end"].widget.attrs.update({"class": "form-control"})
-        self.fields["status"].widget.attrs.update({"class": "form-control"})
         self.fields["message"].widget.attrs.update({"class": "form-control"})
         self.fields["recipients"].widget.attrs.update({"class": "form-control"})
 

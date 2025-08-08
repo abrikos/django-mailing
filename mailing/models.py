@@ -42,8 +42,9 @@ class Message(models.Model):
 class Mailing(models.Model):
     """Mailing List model"""
 
-    start = models.DateTimeField(verbose_name="StartMailing")
-    end = models.DateTimeField(verbose_name="EndMailing")
+    enabled = models.BooleanField(verbose_name="Enable Mailing", default=True)
+    start = models.DateTimeField(verbose_name="Start Mailing")
+    end = models.DateTimeField(verbose_name="End Mailing")
     status = models.CharField(
         max_length=50,
         verbose_name="Status",

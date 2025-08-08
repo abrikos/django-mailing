@@ -18,5 +18,7 @@ table.table.table-striped.table-bordered.table-hover
         th Response
     tbody#results-table
 {%endif%}
+{%if request.resolver_match.kwargs.pk%}
 script getResults({{request.resolver_match.kwargs.pk}},'{{csrf_token}}')
+{%endif%}
 {%endblock%}
