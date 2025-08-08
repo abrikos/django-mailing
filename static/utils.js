@@ -1,4 +1,3 @@
-let results =[]
 function runMailing(mailing, csrfmiddlewaretoken){
 $.ajaxSetup({data:{csrfmiddlewaretoken}})
 $.post('/mailing/run',{mailing}, function(response, status){
@@ -6,6 +5,15 @@ if(status==='success'){
     getResults(mailing, csrfmiddlewaretoken)
 }
 },'json')
+}
+
+function blockUser(user, csrfmiddlewaretoken){
+    $.ajaxSetup({data:{csrfmiddlewaretoken}})
+    $.post('/mailing/block-user/'+user, function(response,status){
+    if(status==='success'){
+        window.location.reload();
+        }
+    })
 }
 
 function getResults(mailing, csrfmiddlewaretoken){

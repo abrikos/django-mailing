@@ -3,6 +3,8 @@ def main_menu_f(request):
     menu = [
         {"route": "home", "title": "Home"},
     ]
+    if request.user.groups.filter(name='Moderator').exists():
+        menu.append({"route": "users", "title": 'Users'})
     if request.user.id:
         menu.append({"route": "mailing", "title": request.user.email})
     else:

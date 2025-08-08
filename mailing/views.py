@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
@@ -13,6 +13,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename='myapp.log', level=logging.INFO)
+
+
 # Create your views here.
 class HomeView(TemplateView):
     """Home view"""
@@ -24,6 +26,30 @@ class HomeView(TemplateView):
             "recipients": User.objects.filter(is_active=True).count(),
         }
         return render(request, "home.pug", context)
+
+
+class UsersListView(LoginRequiredMixin, ListView):
+    """User list view"""
+
+    model = User
+    template_name = "users.pug"
+    context_object_name = "list"
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='Moderator').exists():
+            return User.objects.filter(groups__isnull=True, is_superuser=False)
+        else:
+            return []
+
+def block_user(request, pk):
+    if request.POST:
+        if not request.user.groups.filter(name='Moderator').exists():
+            return HttpResponseForbidden("You don't have permissions")
+        user = User.objects.get(pk=pk)
+        if user:
+            user.is_active = not user.is_active
+            user.save()
+    return HttpResponse()
 
 
 class MessageListView(LoginRequiredMixin, ListView):

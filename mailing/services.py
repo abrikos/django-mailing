@@ -43,7 +43,7 @@ class MailingService:
 
     @staticmethod
     def run_all():
-        mailings = Mailing.objects.filter(enabled=True, start__lt=datetime.now(), end__gt=datetime.now())
+        mailings = Mailing.objects.filter(enabled=True, status__in=['running','created'], start__lt=datetime.now(), end__gt=datetime.now())
         for mailing in mailings:
             status = MailingService.run_service(mailing.id, mailing.owner)
             print(status)
